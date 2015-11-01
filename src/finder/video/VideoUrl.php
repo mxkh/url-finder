@@ -31,6 +31,10 @@ class VideoUrl extends Url
     {
         $url = new Url();
         $urls = $url->find($this->subject)->all();
+        if (is_null($urls)) {
+            return $urls;
+        }
+
         $videoUrls = null;
         foreach ($urls['0'] as $url) {
             parent::find($url);
