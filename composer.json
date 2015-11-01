@@ -1,0 +1,14 @@
+{
+  "name": "maxkh/url-finder",
+  "type": "library",
+  "description": "Composer package by Max",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "mxkh\\url\\": "src/"
+    }
+  }
+}
