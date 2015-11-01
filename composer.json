@@ -1,7 +1,7 @@
 {
-  "name": "maxkh/url-finder",
+  "name": "mxkh/url-finder",
   "type": "library",
-  "description": "Composer package by Max",
+  "description": "Composer package by Max Khartanovych",
   "license": "MIT",
   "require": {
     "php": ">=5.4.0"
