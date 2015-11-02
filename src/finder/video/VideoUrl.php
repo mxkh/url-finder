@@ -11,6 +11,10 @@ namespace mxkh\url\finder\video;
 
 use mxkh\url\finder\Url;
 
+/**
+ * Class VideoUrl
+ * @package mxkh\url\finder\video
+ */
 class VideoUrl extends Url
 {
     /**
