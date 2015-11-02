@@ -10,6 +10,9 @@ namespace mxkh\url\finder;
 
 /**
  * Class Url
+ * @package mxkh\url\finder
+ * @property string $pattern
+ * @property string $subject
  */
 class Url implements UrlInterface
 {
