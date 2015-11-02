@@ -12,9 +12,15 @@ use mxkh\url\finder\video\VideoUrl;
 
 /**
  * Class VimeoVideoUrl
+ * @package mxkh\url\finder\video\services
  */
 class VimeoVideoUrl extends VideoUrl
 {
+    /**
+     * This is regular expression let you find vimeo video URL
+     * Thanks to wwdboer(https://gist.github.com/wwdboer) for this regexp
+     * @var string $pattern regexp
+     */
     protected $pattern =
         '~                          # Match Vimeo link and embed code
 		(?:<iframe [^>]*src=")?         # If iframe match up to first quote of src

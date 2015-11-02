@@ -12,9 +12,15 @@ use mxkh\url\finder\video\VideoUrl;
 
 /**
  * Class YoutubeVideoUrl
+ * @package mxkh\url\finder\video\services
  */
 class YoutubeVideoUrl extends VideoUrl
 {
+    /**
+     * This is regular expression let you find youtube video URL
+     * Thanks to jmrware(https://github.com/jmrware) for this regexp
+     * @var string $pattern regexp
+     */
     protected $pattern =
         '~               # Match non-linked youtube URL in the wild. (Rev:20130823)
         https?://         # Required scheme. Either http or https.
