@@ -20,12 +20,8 @@ use mxkh\url\finder\video\services\YoutubeVideoUrl;
  * @property string $serviceId
  * @property YoutubeVideoUrl|VimeoVideoUrl|RuTubeVideoUrl $service
  */
-class VideoUrl extends Url
+class VideoService extends Url
 {
-    const YOUTUBE_SERVICE_ID = 'youtube';
-    const VIMEO_SERVICE_ID = 'vimeo';
-    const RUTUBE_SERVICE_ID = 'rutube';
-
     /**
      * @var string
      */
@@ -36,9 +32,9 @@ class VideoUrl extends Url
      */
     protected $service;
 
-    public function __construct($serviceId)
+    public function __construct($service)
     {
-        $this->serviceId = $serviceId;
+        $this->service = $service;
     }
 
     /**
@@ -50,7 +46,6 @@ class VideoUrl extends Url
         if (!$url) {
             return null;
         }
-        $this->service = $this->getServiceInstance($this->serviceId);
         $matches = $this->service->subject($url['0'])->one();
         return ['url' => $matches['0'], 'id' => $matches['1']];
     }
@@ -67,7 +62,6 @@ class VideoUrl extends Url
 
         $matches = null;
         if (is_array($urls)) {
-            $this->service = $this->getServiceInstance($this->serviceId);
             foreach ($urls['0'] as $url) {
                 $match = $this->service->subject($url)->one();
                 if (is_null($match)) {
@@ -79,32 +73,5 @@ class VideoUrl extends Url
         }
 
         return $matches;
-    }
-
-    /**
-     * @return array
-     */
-    public
-    function services()
-    {
-        return [
-            self::YOUTUBE_SERVICE_ID => YoutubeVideoUrl::class,
-            self::VIMEO_SERVICE_ID => VimeoVideoUrl::class,
-            self::RUTUBE_SERVICE_ID => RuTubeVideoUrl::class,
-        ];
-    }
-
-    /**
-     * @param $serviceId
-     * @return YoutubeVideoUrl|VimeoVideoUrl|RuTubeVideoUrl
-     */
-    public
-    function getServiceInstance(
-        $serviceId
-    ) {
-        if ($service = $this->services()[$serviceId]) {
-            return new $service;
-        }
-        return null;
     }
 }
