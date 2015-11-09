@@ -8,11 +8,11 @@
  */
 namespace mxkh\url;
 
+use mxkh\url\finder\ServiceProvider;
 use mxkh\url\finder\Url;
 use mxkh\url\finder\video\services\RuTubeVideoUrl;
 use mxkh\url\finder\video\services\VimeoVideoUrl;
 use mxkh\url\finder\video\services\YoutubeVideoUrl;
-use mxkh\url\finder\video\VideoUrl;
 
 /**
  * Class UrlFinder
@@ -41,11 +41,24 @@ class UrlFinder
      */
     public $rutube;
 
-    public function __construct()
+    /**
+     * UrlFinder constructor.
+     * @param string $serviceId
+     */
+    public function __construct($serviceId = ServiceProvider::DEFAULT_SERVICE_ID)
     {
-        $this->url = new Url();
-        $this->youtube = new VideoUrl(VideoUrl::YOUTUBE_SERVICE_ID);
-        $this->vimeo = new VideoUrl(VideoUrl::VIMEO_SERVICE_ID);
-        $this->rutube = new VideoUrl(VideoUrl::RUTUBE_SERVICE_ID);
+        $this->service($serviceId);
+    }
+
+    /**
+     * @param string $serviceId
+     * @return $this
+     */
+    public function service($serviceId)
+    {
+        if (!$this->{$serviceId}) {
+            $this->{$serviceId} = ServiceProvider::factory($serviceId);
+        }
+        return $this;
     }
 }
