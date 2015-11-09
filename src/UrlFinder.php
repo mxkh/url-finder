@@ -47,14 +47,14 @@ class UrlFinder
      */
     public function __construct($serviceId = ServiceProvider::DEFAULT_SERVICE_ID)
     {
-        $this->service($serviceId);
+        $this->addservice($serviceId);
     }
 
     /**
      * @param string $serviceId
      * @return $this
      */
-    public function service($serviceId)
+    public function addService($serviceId)
     {
         if (!$this->{$serviceId}) {
             $this->{$serviceId} = ServiceProvider::factory($serviceId);
