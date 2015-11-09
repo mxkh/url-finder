@@ -44,7 +44,7 @@ class Url implements UrlInterface
     protected function extract()
     {
         if (preg_match($this->pattern, $this->subject, $matches)) {
-            return ['url' => [$matches['0']], 'id' => [$matches['1']]];
+            return $matches;
         }
         return null;
     }
@@ -53,11 +53,8 @@ class Url implements UrlInterface
      * @param string $subject
      * @return Url
      */
-    public function find($subject)
+    public function subject($subject)
     {
-        if (!is_string($subject)) {
-            throw new \InvalidArgumentException('Param must be a "string"');
-        }
         $this->subject = $subject;
         return $this;
     }

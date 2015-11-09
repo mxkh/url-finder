@@ -10,46 +10,101 @@
 namespace mxkh\url\finder\video;
 
 use mxkh\url\finder\Url;
+use mxkh\url\finder\video\services\RuTubeVideoUrl;
+use mxkh\url\finder\video\services\VimeoVideoUrl;
+use mxkh\url\finder\video\services\YoutubeVideoUrl;
 
 /**
  * Class VideoUrl
  * @package mxkh\url\finder\video
+ * @property string $serviceId
+ * @property YoutubeVideoUrl|VimeoVideoUrl|RuTubeVideoUrl $service
  */
 class VideoUrl extends Url
 {
+    const YOUTUBE_SERVICE_ID = 'youtube';
+    const VIMEO_SERVICE_ID = 'vimeo';
+    const RUTUBE_SERVICE_ID = 'rutube';
+
     /**
-     * @return array|null
+     * @var string
      */
-    public function one()
+    protected $serviceId;
+
+    /**
+     * @var YoutubeVideoUrl|VimeoVideoUrl|RuTubeVideoUrl
+     */
+    protected $service;
+
+    public function __construct($serviceId)
     {
-        $url = new Url();
-        $url = $url->find($this->subject)->one();
-        parent::find($url['url']['0']);
-        return parent::one();
+        $this->serviceId = $serviceId;
     }
 
     /**
      * @return array|null
      */
-    public function all()
+    public function extract()
     {
-        $url = new Url();
-        $urls = $url->find($this->subject)->all();
+        $url = parent::extract();
+        if (!$url) {
+            return null;
+        }
+        $this->service = $this->getServiceInstance($this->serviceId);
+        $matches = $this->service->subject($url['0'])->one();
+        return ['url' => $matches['0'], 'id' => $matches['1']];
+    }
+
+    /**
+     * @return array|null
+     */
+    public function extractAll()
+    {
+        $urls = parent::extractAll();
         if (is_null($urls)) {
             return $urls;
         }
 
-        $videoUrls = null;
-        foreach ($urls['0'] as $url) {
-            parent::find($url);
-            $match = parent::one();
-            if (is_null($match)) {
-                continue;
+        $matches = null;
+        if (is_array($urls)) {
+            $this->service = $this->getServiceInstance($this->serviceId);
+            foreach ($urls['0'] as $url) {
+                $match = $this->service->subject($url)->one();
+                if (is_null($match)) {
+                    continue;
+                }
+                $matches['url'][] = $match['0'];
+                $matches['id'][] = $match['1'];
             }
-            $videoUrls['url'][] = $match['url']['0'];
-            $videoUrls['id'][] = $match['id']['0'];
         }
 
-        return $videoUrls;
+        return $matches;
+    }
+
+    /**
+     * @return array
+     */
+    public
+    function services()
+    {
+        return [
+            self::YOUTUBE_SERVICE_ID => YoutubeVideoUrl::class,
+            self::VIMEO_SERVICE_ID => VimeoVideoUrl::class,
+            self::RUTUBE_SERVICE_ID => RuTubeVideoUrl::class,
+        ];
+    }
+
+    /**
+     * @param $serviceId
+     * @return YoutubeVideoUrl|VimeoVideoUrl|RuTubeVideoUrl
+     */
+    public
+    function getServiceInstance(
+        $serviceId
+    ) {
+        if ($service = $this->services()[$serviceId]) {
+            return new $service;
+        }
+        return null;
     }
 }
