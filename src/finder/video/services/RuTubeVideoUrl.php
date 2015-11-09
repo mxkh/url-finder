@@ -8,13 +8,13 @@
  */
 namespace mxkh\url\finder\video\services;
 
-use mxkh\url\finder\video\VideoUrl;
+use mxkh\url\finder\Url;
 
 /**
  * Class RuTubeVideoUrl
  * @package mxkh\url\finder\video\services
  */
-class RuTubeVideoUrl extends VideoUrl
+class RuTubeVideoUrl extends Url
 {
     /**
      * This is regular expression let you find youtube video URL

@@ -8,13 +8,13 @@
  */
 namespace mxkh\url\finder\video\services;
 
-use mxkh\url\finder\video\VideoUrl;
+use mxkh\url\finder\Url;
 
 /**
  * Class VimeoVideoUrl
  * @package mxkh\url\finder\video\services
  */
-class VimeoVideoUrl extends VideoUrl
+class VimeoVideoUrl extends Url
 {
     /**
      * This is regular expression let you find vimeo video URL
