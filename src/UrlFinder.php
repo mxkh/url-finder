@@ -12,6 +12,7 @@ use mxkh\url\finder\Url;
 use mxkh\url\finder\video\services\RuTubeVideoUrl;
 use mxkh\url\finder\video\services\VimeoVideoUrl;
 use mxkh\url\finder\video\services\YoutubeVideoUrl;
+use mxkh\url\finder\video\VideoUrl;
 
 /**
  * Class UrlFinder
@@ -24,27 +25,27 @@ use mxkh\url\finder\video\services\YoutubeVideoUrl;
 class UrlFinder
 {
     /**
-     * @var Url $url
+     * @var Url
      */
     public $url;
     /**
-     * @var YoutubeVideoUrl $youtube
+     * @var YoutubeVideoUrl
      */
     public $youtube;
     /**
-     * @var VimeoVideoUrl $vimeo
+     * @var VimeoVideoUrl
      */
     public $vimeo;
     /**
-     * @var RuTubeVideoUrl $rutube
+     * @var RuTubeVideoUrl
      */
     public $rutube;
 
     public function __construct()
     {
         $this->url = new Url();
-        $this->youtube = new YoutubeVideoUrl();
-        $this->vimeo = new VimeoVideoUrl();
-        $this->rutube = new RuTubeVideoUrl();
+        $this->youtube = new VideoUrl(VideoUrl::YOUTUBE_SERVICE_ID);
+        $this->vimeo = new VideoUrl(VideoUrl::VIMEO_SERVICE_ID);
+        $this->rutube = new VideoUrl(VideoUrl::RUTUBE_SERVICE_ID);
     }
 }

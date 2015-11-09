@@ -8,14 +8,15 @@
  */
 namespace mxkh\url\finder\video\services;
 
-use mxkh\url\finder\video\VideoUrl;
+use mxkh\url\finder\Url;
 
 /**
  * Class YoutubeVideoUrl
  * @package mxkh\url\finder\video\services
  */
-class YoutubeVideoUrl extends VideoUrl
+class YoutubeVideoUrl extends Url
 {
+    const IDENTITY_PATTERN = '%youtube|youtu\.be%i';
     /**
      * This is regular expression let you find youtube video URL
      * Thanks to jmrware(https://github.com/jmrware) for this regexp
