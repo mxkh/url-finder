@@ -47,7 +47,7 @@ class UrlFinder
      */
     public function __construct($serviceId = ServiceProvider::DEFAULT_SERVICE_ID)
     {
-        $this->addservice($serviceId);
+        $this->addService($serviceId);
     }
 
     /**
